@@ -1,0 +1,27 @@
+.appFooter {
+  background-color: #282c34;
+  font-size: 25px;
+  color: white;
+  grid-area: footer;
+  padding: 1rem;
+}
+
+.appFooter a {
+  text-decoration: none;
+}
+
+.appFooter a.telegram {
+  color: #5682A3;
+}
+
+.appFooter a.react {
+  color: #61DAFB;
+}
+
+.appFooter a.redux {
+  color: #754bbe;
+}
+
+.appFooter a:hover {
+  text-decoration: underline;
+}

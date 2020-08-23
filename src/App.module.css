@@ -1,0 +1,11 @@
+.app {
+  min-height: 100%;
+  background-color: #282c34;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 20% 80%;
+  grid-template-areas:
+    'header header'
+    'navigation main'
+    'footer footer';
+}

@@ -1,0 +1,32 @@
+.post {
+  color: white;
+  background-color: #282c34;
+  font-size: 25px;
+  grid-area: main;
+  text-align: left;
+  border: 1px solid;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 10px;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 100px auto;
+  grid-template-areas:  'avatar text';
+}
+
+.postAvatar {
+  height: 100px;
+  overflow: hidden;
+  border-radius: 50%;
+  grid-area: avatar;
+}
+
+.postAvatar img {
+  height: 100%;
+  margin-left: -25px;
+}
+
+.postText { 
+  padding-left: 10px; 
+  grid-area: text;
+}

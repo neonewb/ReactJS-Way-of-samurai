@@ -1,0 +1,29 @@
+.appNavigation {
+  padding: 0;
+  background-color: #282c34;
+  font-size: 25px;
+  grid-area: navigation;
+  display: flex;
+  flex-direction: column;
+}
+
+.appNavigation a {
+  border-radius: 10px;
+  padding-left: 6px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+
+.appNavigation a:hover {
+  color: #282c34;
+  background-color: white;
+}
+
+.appNavigation a.active {
+  color: #282c34;
+  background-color: white;
+}

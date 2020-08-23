@@ -1,0 +1,8 @@
+.appHeader {
+  background-color: #282c34;
+  font-size: 25px;
+  color: white;
+  grid-area: header;
+  padding: 1rem;
+  font-weight: bold
+}

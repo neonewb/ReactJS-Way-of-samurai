@@ -1,0 +1,12 @@
+.nessageInputForm {
+  display: flex;
+  align-items: stretch ;
+}
+
+.nessageInputForm > button {
+  margin-top: 10px;
+  margin-left: 5px;
+  background-color: #282c34;
+  color: white;
+  border: 1px solid white;
+}

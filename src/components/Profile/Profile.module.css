@@ -1,0 +1,8 @@
+.appMainContent {
+  color: white;
+  background-color: #282c34;
+  width: 80%;
+  font-size: 25px;
+  grid-area: main;
+  text-align: left;
+}

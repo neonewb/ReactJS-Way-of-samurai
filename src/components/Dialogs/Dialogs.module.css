@@ -1,0 +1,47 @@
+.dialogsPage {
+  font-size: 25px;
+  color: white;
+  grid-area: main;
+  padding: 1rem;
+  width: 90%;
+  display: grid;
+  grid-template-columns: 30% 70%;
+}
+
+.dialogsPage a {
+  color: white;
+  text-decoration: none;
+}
+
+.dialogsPage a.active {
+  color: #282c34;
+  background-color: white;
+}
+
+.dialogs a:hover {
+  color: #282c34;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.dialogs {
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.messages {
+  text-align: left;
+}
+
+input {
+  font-size: 25px;
+  margin-top: 10px;
+  padding: 5px 0px 0px 0px;
+  border: 1px solid;
+  border-radius: 5px;
+  color: white;
+  background-color: #282c34;
+  width: 100%;
+}

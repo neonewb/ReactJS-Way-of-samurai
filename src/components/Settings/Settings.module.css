@@ -1,0 +1,8 @@
+.settings {
+  background-color: #282c34;
+  font-size: 25px;
+  color: white;
+  grid-area: main;
+  padding: 1rem;
+  width: 80%;
+}
