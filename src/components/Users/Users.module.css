@@ -1,8 +1,60 @@
-.settings {
+.users {
   background-color: #282c34;
   font-size: 25px;
   color: white;
   grid-area: main;
   padding: 1rem;
   width: 80%;
+}
+.user {
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 10px;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 100px 65% auto;
+  grid-template-areas:  'avatar name location';
+}
+
+.users__avatar {
+  height: 100px;
+  overflow: hidden;
+  border-radius: 50%;
+  grid-area: avatar;
+}
+
+.users__avatar img {
+  height: 100%;
+  margin-left: -25px;
+}
+
+.users button {
+  font-size: 20px;
+font-weight: bold;
+margin-top: 10px;
+margin-left: 5px;
+background-color: white;
+color:  #282c34;
+border: 1px solid white;
+}
+
+.pages {
+  font-size: 25px;
+  color: white;
+  grid-area: main;
+}
+
+.selectedPage {
+  font-weight: bold;
+  margin-right: 5px;
+  text-decoration: underline;
+}
+
+.pageNumber {
+  margin-right: 5px;
+}
+
+.pageNumber:hover {
+  text-decoration: underline;
 }

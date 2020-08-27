@@ -8,13 +8,14 @@ import Header from './components/Header/Header'
 import Navigation from './components/Navigation/Navigation'
 import Profile from './components/Profile/Profile'
 import Footer from './components/Footer/Footer'
-import Dialogs from './components/Dialogs/Dialogs'
 import Welcome from './components/Welcome/Welcome'
+import Dialogs from './components/Dialogs/Dialogs'
+import UsersContainer from './components/Users/UsersContainer'
 // import Settings from './components/Settings/Settings'
 // import News from './components/News/News'
 // import Music from './components/Music/Music'
 
-let App = (props) => {
+const App = (props) => {
   return (
     <Router>
       <div className={Style.app}>
@@ -23,28 +24,30 @@ let App = (props) => {
         <Navigation />
 
         <Switch>
-          <Route exact path='/' component={Welcome} />
+          <Route
+            exact path='/'
+            component={Welcome} />
 
           <Route
             path='/profile'
             render={() => (
-              <Profile
-                profileState={props.state.profilePage}
-                newPostText={props.state.profilePage.newPostText}
-                dispatch={props.Store.dispatch.bind(props.Store)}
-              />
+              <Profile />
             )}
           />
 
           <Route
             path='/dialogs'
             render={() => (
-              <Dialogs
-                Store={props.Store}
-              />
+              <Dialogs />
             )}
           />
 
+          <Route
+            path='/users'
+            render={() => (
+              <UsersContainer />
+            )}
+          />
           {/* <Route path='/news'
           component={News} />
 

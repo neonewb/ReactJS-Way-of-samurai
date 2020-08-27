@@ -1,42 +1,55 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
-import Message from './Message/Message'
-import Style from './RequestChat.module.css'
-import {onSubmitMessageCreator, updateNewMessageTextCreator} from "../../../redux/message-reducer";
+import {onSubmitMessageCreator, updateNewMessageTextCreator} from "../../../redux/message-reducer"
+import RequestChat from "./RequestChat"
+import {connect} from "react-redux";
 
-let RequestChat = (props) => {
-
-  let { chatID } = useParams()
-  let message = props.state.chatData[chatID].map((chat) => (
-    <Message message={chat.message} id={chat.id} key={chat.id} />
-  ))
-
-  const onNewMessageChange = (e) => {
-    e.preventDefault()
-    let text = e.currentTarget.value
-    props.Store.dispatch(updateNewMessageTextCreator(text))
+const mapStateToProps = (state) => {
+  return {
+    state: state.messagesPage,
   }
-
-  const onSubmitMessage = (e) => {
-    e.preventDefault()
-    props.Store.dispatch(onSubmitMessageCreator(chatID))
-  }
-
-  return (
-    <div>
-      <div>{message}</div>
-      <form className={Style.nessageInputForm}>
-        <input
-          placeholder='Write a message...'
-          value={props.state.newMessageText}
-          onChange={onNewMessageChange}
-        />
-        <button type='submit' onClick={onSubmitMessage}>
-          Submit
-        </button>
-      </form>
-    </div>
-  )
 }
 
-export default RequestChat
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateNewMessageText: (text) => {
+      dispatch(updateNewMessageTextCreator(text))
+    },
+    sendMessage: (chatID) => {
+      dispatch(onSubmitMessageCreator(chatID))
+    }
+  }
+}
+
+const RequestChatContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RequestChat)
+
+export default RequestChatContainer
+
+// const RequestChatContainer = (props) => {
+//   return (
+//     <StoreContext.Consumer>
+//       { (Store) => {
+//
+//         let state = Store.getState().messagesPage
+//
+//         const updateNewMessageText = (text) => {
+//           let action = updateNewMessageTextCreator(text)
+//           Store.dispatch(action)
+//         }
+//
+//         const sendMessage = (chatID) => {
+//           let action = onSubmitMessageCreator(chatID)
+//           Store.dispatch(action)
+//         }
+//         return (
+//           <RequestChat state={state}
+//                        updateNewMessageText={updateNewMessageText}
+//                        sendMessage={sendMessage}/>
+//         )
+//       }
+//     }
+//     </StoreContext.Consumer>
+//   )
+// }

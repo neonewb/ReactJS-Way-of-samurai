@@ -12,6 +12,9 @@ export default function Navigation() {
       <NavLink to='/dialogs' activeClassName={Style.active}>
         Messages
       </NavLink>
+      <NavLink to='/users' activeClassName={Style.active}>
+        Users
+      </NavLink>
       {/* <NavLink to='/news' activeClassName={Style.active}>News</NavLink>
         <NavLink to='/music' activeClassName={Style.active}>Music</NavLink>
         <NavLink to='/settings' activeClassName={Style.active}>Settings</NavLink> */}

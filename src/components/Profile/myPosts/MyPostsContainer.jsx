@@ -1,42 +1,55 @@
 import React from 'react'
-import Style from './MyPosts.module.css'
-import Post from './Post/Post'
-import {addPostCreator, updateNewPostTextCreator} from '../../../redux/profile-reducer';
+import {addPostCreator, updateNewPostTextCreator} from '../../../redux/profile-reducer'
+import MyPosts from "./MyPosts"
+import {connect} from "react-redux"
 
-let MyPosts = (props) => {
-  let post = props.postData.map((post) => (
-    <Post message={post.post} key={post.id} />
-  ))
-
-  const onAddPost = (e) => {
-    e.preventDefault()
-    // props.addPost()
-    props.dispatch(addPostCreator())
+const mapStateToProps = (state) => {
+  return {
+    postData: state.profilePage.postData,
+    newPostText: state.profilePage.newPostText
   }
-
-  const onPostChange = (e) => {
-    e.preventDefault()
-    let text = e.currentTarget.value
-    // props.updateNewPost(text)
-    props.dispatch(updateNewPostTextCreator(text))
-  }
-
-  return (
-    <div className={Style.appMainPosts}>
-      <div>My posts</div>
-      <form className={Style.newPost}>
-        <textarea
-          onChange={onPostChange}
-          placeholder='Whats happening?'
-          value={props.newPostText}
-        />
-        <button type='submit' onClick={onAddPost}>
-          Add post
-        </button>
-      </form>
-      {post}
-    </div>
-  )
 }
 
-export default MyPosts
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateNewPost: (text) => {
+      dispatch(updateNewPostTextCreator(text))
+    },
+    addPost: () => {
+      dispatch(addPostCreator())
+    }
+  }
+}
+
+const MyPostsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MyPosts)
+
+export default MyPostsContainer
+
+// const MyPostsContainer = (props) => {
+//   return (
+//     <StoreContext.Consumer>
+//       { (Store) => {
+//         let state = Store.getState().profilePage
+//         const onAddPost = () => {
+//           let action = addPostCreator()
+//           Store.dispatch(action)
+//         }
+//
+//         const onPostChange = (text) => {
+//           let action = updateNewPostTextCreator(text)
+//           Store.dispatch(action)
+//         }
+//
+//         return (
+//           <MyPosts updateNewPost={onPostChange}
+//                    addPost={onAddPost}
+//                    postData={state.postData}
+//                    newPostText={state.newPostText}/>)
+//       }
+//     }
+//     </StoreContext.Consumer>
+//   )
+// }

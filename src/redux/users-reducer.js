@@ -1,53 +1,75 @@
-const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const FOLLOW = 'FOLLOW'
+const UNFOLLOW = 'UNFOLLOW'
+const SET_USERS = 'SET_USERS'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 
 let initialState = {
-  postData: [
-    {
-      id: 0,
-      post: 'React Is A JavaScript Library For Building User  Interfaces',
-    },
-    {
-      id: 1,
-      post: 'Redux Is A Predictable State Container for JS Apps',
-    },
-  ],
-  newPostText: '',
+  users: [],
+  pageSize: 4,
+  totalUsersCount: 19,
+  currentPage: 1
 }
 
-const profileReducer = (state = initialState, action) => {
+const usersReducer = (state = initialState, action) => {
   switch (action.type) {
-
-    case UPDATE_NEW_POST_TEXT:
-      return  {
-        ...state,
-        newPostText: action.text
-      }
-
-    case ADD_POST:
-      if (state.newPostText === '') return state
-      let newPost = {
-        id: state.postData.length,
-        post: state.newPostText,
-      }
+    case FOLLOW:
       return {
         ...state,
-        postData: [...state.postData, newPost],
-        newPostText: ''
+        users: state.users.map(user => {
+          if (user.id === action.userID) {
+            return {...user, followed: true}
+          }
+          return user
+        })
       }
 
+    case UNFOLLOW:
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === action.userID) {
+            return {...user, followed: false}
+          }
+          return user
+        })
+      }
+
+    case  SET_USERS: {
+      return {
+        ...state,
+        users: [...state.users, ...action.users]
+      }
+    }
+    
+    case SET_CURRENT_PAGE: {
+      return {
+        ...state,
+        currentPage: action.newCurrentPage
+      }
+    }
     default:
       return state
   }
 }
 
-export const addPostCreator = () => ({
-  type: ADD_POST
+export const followAC = (userID) => ({
+  type: FOLLOW,
+  userID
 })
 
-export const updateNewPostTextCreator = (text) => ({
-  type: UPDATE_NEW_POST_TEXT,
-  text
+export const unFollowAC = (userID) => ({
+  type: UNFOLLOW,
+  userID
 })
 
-export default profileReducer
+export const setUsersAC = (users) => ({
+  type: SET_USERS,
+  users
+})
+
+export const setCurrentPageAC = (newCurrentPage) => ({
+  type: SET_CURRENT_PAGE,
+  newCurrentPage
+})
+
+export default usersReducer

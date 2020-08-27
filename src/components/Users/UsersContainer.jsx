@@ -1,12 +1,31 @@
-import React from "react"
-import Style from './Users.module.css'
+import {connect} from "react-redux"
+import Users from "./Users"
+import {followAC, setUsersAC, unFollowAC, setCurrentPageAC} from "../../redux/users-reducer"
 
-const Users = () => {
-  return(
-    <div className={Style.users}>
-      Users
-    </div>
-  )
+const mapStateToProps = (state) => {
+  return {
+    users: state.usersPage.users,
+    pageSize: state.usersPage.pageSize,
+    totalUsersCount: state.usersPage.totalUsersCount,
+    currentPage: state.usersPage.currentPage,
+  }
 }
 
-export default Users
+const mapDispatchToProps = (dispatch) => {
+  return {
+    followUser: (userID) => {
+      dispatch(followAC(userID))
+    },
+    unFollowUser: (userID) => {
+      dispatch(unFollowAC(userID))
+    },
+    setUsers: (users) => {
+      dispatch(setUsersAC(users))
+    },
+    setCurrentPage: (newCurrentPage) => {
+      dispatch(setCurrentPageAC(newCurrentPage))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users)

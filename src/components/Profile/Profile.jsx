@@ -1,17 +1,13 @@
 import React from "react"
 import Style from "./Profile.module.css"
-import MyPosts from "./myPosts/MyPosts"
-import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import ProfileInfo from "./ProfileInfo/ProfileInfo"
+import MyPostsContainer from "./myPosts/MyPostsContainer"
 
- let Profile = (props) => {
+const Profile = (props) => {
   return (
     <main className={Style.appMainContent}>
       <ProfileInfo />
-      <MyPosts 
-        postData={props.profileState.postData} 
-        newPostText = {props.newPostText}
-        dispatch = {props.dispatch}
-      />
+      <MyPostsContainer />
     </main>
   );
 }

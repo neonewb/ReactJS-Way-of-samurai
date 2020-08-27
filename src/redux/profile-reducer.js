@@ -1,23 +1,40 @@
-import React from "react";
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 
-const profileReducer = (state, action) => {
+let initialState = {
+  postData: [
+    {
+      id: 0,
+      post: 'React Is A JavaScript Library For Building User  Interfaces',
+    },
+    {
+      id: 1,
+      post: 'Redux Is A Predictable State Container for JS Apps',
+    },
+  ],
+  newPostText: '',
+}
+
+const profileReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case UPDATE_NEW_POST_TEXT:
-      state.newPostText = action.text
-      return state
+      return  {
+        ...state,
+        newPostText: action.text
+      }
 
     case ADD_POST:
-      if (state.newPostText === '') break
+      if (state.newPostText === '') return state
       let newPost = {
         id: state.postData.length,
         post: state.newPostText,
       }
-      state.postData.push(newPost)
-      state.newPostText = ''
-      return state
+      return {
+        ...state,
+        postData: [...state.postData, newPost],
+        newPostText: ''
+      }
 
     default:
       return state

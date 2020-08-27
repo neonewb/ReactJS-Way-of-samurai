@@ -1,12 +1,14 @@
-.nessageInputForm {
+.messageInputForm {
   display: flex;
   align-items: stretch ;
 }
 
-.nessageInputForm > button {
+.messageInputForm > button {
+  font-size: 20px;
+  font-weight: bold;
   margin-top: 10px;
   margin-left: 5px;
-  background-color: #282c34;
-  color: white;
+  background-color: white;
+  color:  #282c34;
   border: 1px solid white;
 }
