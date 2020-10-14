@@ -6,3 +6,17 @@
   padding: 1rem;
   font-weight: bold
 }
+
+.loginBlock {
+  float: right;
+}
+
+.loginBlock a {
+  float: right;
+  text-decoration: none;
+  color: white;
+}
+
+.loginBlock a:hover {
+  text-decoration: underline;
+}

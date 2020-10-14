@@ -8,6 +8,7 @@
 }
 
 .appNavigation a {
+  margin-left: 10px;
   border-radius: 10px;
   padding-left: 6px;
   height: 50px;

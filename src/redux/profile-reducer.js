@@ -1,5 +1,9 @@
+import { profileAPI } from '../api/api'
+
 const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const DELETE_POST = 'DELETE-POST'
+const SET_USER_PROFILE = 'SET_USER_PROFILE'
+const SET_USER_STATUS = 'SET_USER_STATUS'
 
 let initialState = {
   postData: [
@@ -12,28 +16,39 @@ let initialState = {
       post: 'Redux Is A Predictable State Container for JS Apps',
     },
   ],
-  newPostText: '',
+  profile: null,
+  status: '',
 }
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
-
-    case UPDATE_NEW_POST_TEXT:
-      return  {
-        ...state,
-        newPostText: action.text
-      }
-
     case ADD_POST:
-      if (state.newPostText === '') return state
+      if (action.newPostText === undefined) return state
       let newPost = {
         id: state.postData.length,
-        post: state.newPostText,
+        post: action.newPostText,
       }
       return {
         ...state,
         postData: [...state.postData, newPost],
-        newPostText: ''
+      }
+
+    case DELETE_POST:
+      return {
+        ...state,
+        postData: [...state.postData.filter((p) => p.id !== action.postID)],
+      }
+
+    case SET_USER_PROFILE:
+      return {
+        ...state,
+        profile: action.profile,
+      }
+
+    case SET_USER_STATUS:
+      return {
+        ...state,
+        status: action.status,
       }
 
     default:
@@ -41,13 +56,43 @@ const profileReducer = (state = initialState, action) => {
   }
 }
 
-export const addPostCreator = () => ({
-  type: ADD_POST
+// Action
+export const addPost = (newPostText) => ({
+  type: ADD_POST,
+  newPostText,
 })
 
-export const updateNewPostTextCreator = (text) => ({
-  type: UPDATE_NEW_POST_TEXT,
-  text
+export const deletePost = (postID) => ({
+  type: DELETE_POST,
+  postID,
 })
+
+const setUserProfile = (profile) => ({
+  type: SET_USER_PROFILE,
+  profile,
+})
+
+const setUserStatus = (status) => ({
+  type: SET_USER_STATUS,
+  status,
+})
+
+// Thunk
+export const getProfile = (userID) => async (dispatch) => {
+  const response = await profileAPI.getProfile(userID)
+  dispatch(setUserProfile(response))
+}
+
+export const getUserStatus = (userID) => async (dispatch) => {
+  const response = await profileAPI.getUserStatus(userID)
+  dispatch(setUserStatus(response))
+}
+
+export const updateStatus = (status) => async (dispatch) => {
+  const response = await profileAPI.updateStatus(status)
+    if (response.resultCode === 0) {
+      dispatch(setUserStatus(status))
+    }
+}
 
 export default profileReducer

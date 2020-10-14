@@ -1,39 +1,49 @@
 import React from 'react'
 import Style from './MyPosts.module.css'
 import Post from './Post/Post'
+import { Field, reduxForm } from 'redux-form'
+import { maxLengthCreator, requiredField } from '../../../utils/validators'
+import { Textarea } from '../../common/FormControls/FormControls'
 
-let MyPosts = (props) => {
-  let post = props.postData.map((post) => (
+const maxLength10 = maxLengthCreator(10)
+
+let MyPosts = React.memo((props) => {
+  let post = [...props.postData].reverse().map((post) => (
     <Post message={post.post} key={post.id} />
   ))
 
-  const onAddPost = (e) => {
-    e.preventDefault()
-    props.addPost()
-  }
-
-  const onPostChange = (e) => {
-    e.preventDefault()
-    let text = e.currentTarget.value
-    props.updateNewPost(text)
+  const onAddPost = (formData) => {
+    props.addPost(formData.newPostText)
+    formData.newPostText = undefined
   }
 
   return (
     <div className={Style.appMainPosts}>
-      <div>My posts</div>
-      <form className={Style.newPost}>
-        <textarea
-          onChange={onPostChange}
-          placeholder='Whats happening?'
-          value={props.newPostText}
-        />
-        <button type='submit' onClick={onAddPost}>
-          Add post
-        </button>
-      </form>
+      <div></div>
+      <AddPostReduxForm onSubmit={onAddPost}/>
       {post}
     </div>
   )
+})
+
+const AddPostForm = (props) => {
+  return (
+    <form onSubmit={props.handleSubmit} className={Style.newPost}>
+      <Field
+        component={Textarea}
+        name='newPostText'
+        placeholder='Whats happening?'
+        validate={[requiredField, maxLength10]}
+      />
+      <button type='submit'>
+        Add post
+      </button>
+    </form>
+  )
 }
+
+const AddPostReduxForm = reduxForm({
+  form: 'AddPostForm',
+})(AddPostForm)
 
 export default MyPosts

@@ -47,14 +47,15 @@ border: 1px solid white;
 
 .selectedPage {
   font-weight: bold;
-  margin-right: 5px;
+  margin-right: 10px;
   text-decoration: underline;
 }
 
 .pageNumber {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 
 .pageNumber:hover {
   text-decoration: underline;
+  cursor: pointer;
 }

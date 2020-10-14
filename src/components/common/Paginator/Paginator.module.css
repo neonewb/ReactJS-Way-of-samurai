@@ -1,0 +1,24 @@
+.pages {
+  font-size: 25px;
+  color: white;
+  grid-area: main;
+}
+
+.selectedPage {
+  font-weight: bold;
+  margin-right: 10px;
+  text-decoration: underline;
+}
+
+.pageNumber {
+  margin-right: 10px;
+}
+
+.pageNumber:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btnPrev {
+  margin-right: 15px;
+}

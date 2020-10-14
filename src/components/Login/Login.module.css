@@ -1,6 +1,7 @@
-.music {
+.login {
   background-color: #282c34;
   font-size: 25px;
+  font-weight: bold;
   color: white;
   grid-area: main;
   padding: 1rem;

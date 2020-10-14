@@ -1,7 +1,7 @@
 import React from 'react'
 import Style from './Settings.module.css'
 
-export default function Settings (props) {
+const Settings = (props) => {
     return (
         <div className={Style.settings}>
             Settings
@@ -9,3 +9,4 @@ export default function Settings (props) {
     )
 }
 
+export default Settings

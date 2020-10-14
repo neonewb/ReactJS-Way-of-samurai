@@ -2,11 +2,13 @@ import React from 'react'
 import Style from './Dialogs.module.css'
 import {Switch, Route, useRouteMatch} from 'react-router-dom'
 import Chat from './Chat/Chat'
-import RequestChatContainer from "./RequestChat/RequestChatContainer"
-import {connect} from "react-redux";
-import Store from "../../redux/redux-store"
+import RequestChatContainer from './RequestChat/RequestChatContainer'
+import {connect} from 'react-redux'
+import {withAuthRedirect} from '../../hoc/withAuthRedirect'
+import {compose} from 'redux'
 
-let Dialogs = (props) => {
+const Dialogs = (props) => {
+  const match = useRouteMatch()
 
   // let mapStateToProps = (state) => {
   //   return {
@@ -18,13 +20,10 @@ let Dialogs = (props) => {
   // let chat = connect(
   //   mapStateToProps)(Chat)
 
-  let state = Store.getState().messagesPage
-
-  let chat = state.chatNames.map((chat) => (
+  const chat = props.state.chatNames.map((chat) => (
     <Chat name={chat.name} id={chat.id} key={chat.id}/>
   ))
 
-  const match = useRouteMatch()
   return (
     <div className={Style.dialogsPage}>
       <div className={Style.dialogs}>
@@ -52,4 +51,13 @@ let Dialogs = (props) => {
   )
 }
 
-export default Dialogs
+const mapStateToProps = (state) => {
+  return {
+    state: state.messagesPage,
+  }
+}
+
+export default compose(
+  withAuthRedirect,
+  connect(mapStateToProps)
+)(Dialogs)

@@ -1,4 +1,3 @@
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT'
 const ON_SUBMIT_NEW_MESSAGE = 'ON-SUBMIT-NEW-MESSAGE'
 
 let initialState = {
@@ -31,30 +30,22 @@ let initialState = {
       {id: 3, message: 'Knock, knock, Neo...'},
     ],
   ],
-  newMessageText: '',
 }
 
 const messageReducer = (state = initialState, action) => {
 
   switch (action.type) {
 
-    case UPDATE_NEW_MESSAGE_TEXT:
-      return  {
-        ...state,
-        newMessageText: action.text
-      }
-
     case ON_SUBMIT_NEW_MESSAGE:
-      if (state.newMessageText === '') return state
+      if (action.text === undefined) return state
       let chatID = action.chatID
       let newMessage = {
         id: state.chatData[chatID].length,
-        message: state.newMessageText,
+        message: action.text,
       }
       let stateCopy = {
         ...state,
         chatData: [...state.chatData],
-      newMessageText: ''
       }
       stateCopy.chatData[chatID] = [...state.chatData[chatID], newMessage]
       return stateCopy
@@ -64,14 +55,10 @@ const messageReducer = (state = initialState, action) => {
   }
 }
 
-export const updateNewMessageTextCreator = (text) => ({
-  type: UPDATE_NEW_MESSAGE_TEXT,
-  text
-})
-
-export const onSubmitMessageCreator = (chatID) => ({
+export const sendMessage = (chatID, text) => ({
   type: ON_SUBMIT_NEW_MESSAGE,
-  chatID
+  chatID,
+  text
 })
 
 export default messageReducer

@@ -13,3 +13,27 @@
   width: 100%;
   height: 100px;
 }
+
+.profile {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.profile__avatar {
+  max-width: 200px;
+}
+
+.profile__NameAbout {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.profile__Name {
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.profile__status {
+  font-weight: bold;
+}
