@@ -10,9 +10,9 @@ import { Redirect } from 'react-router-dom'
 
 const maxLength30 = maxLengthCreator(30)
 
-const LoginPage = ({ login, isAuth }) => {
+const LoginPage = ({ login, isAuth, captchaURL }) => {
   const onSubmit = (FormData) => {
-    login(FormData.email, FormData.password, FormData.rememberMe)
+    login(FormData.email, FormData.password, FormData.rememberMe, FormData.captcha)
   }
 
   if (isAuth) {
@@ -23,12 +23,12 @@ const LoginPage = ({ login, isAuth }) => {
     <div className={Style.login}>
       <div>LOGIN</div>
       <div>Welcome to the Matrix network!</div>
-      <LoginReduxForm onSubmit={onSubmit} />
+      <LoginReduxForm onSubmit={onSubmit} captchaURL={captchaURL} />
     </div>
   )
 }
 
-const LoginForm = ({ handleSubmit, error }) => {
+const LoginForm = ({ handleSubmit, error, captchaURL }) => {
   return (
     <form onSubmit={handleSubmit}>
       {createField(
@@ -46,6 +46,14 @@ const LoginForm = ({ handleSubmit, error }) => {
         'password'
       )}
       {createField('rememberMe', Input, null, null, 'checkbox', 'Remember me')}
+      {captchaURL && <img src={captchaURL} /> }
+      {captchaURL && createField(
+        'captcha',
+        Input,
+        [requiredField],
+        'Captcha',
+        'captcha'
+      )}
       {error && <div className={FormStyle.formSummaryError}>{error}</div>}
       <div>
         <button type='submit'>Login</button>
@@ -60,6 +68,7 @@ const LoginReduxForm = reduxForm({
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
+  captchaURL: state.auth.captchaURL
 })
 
 export default connect(mapStateToProps, { login })(LoginPage)

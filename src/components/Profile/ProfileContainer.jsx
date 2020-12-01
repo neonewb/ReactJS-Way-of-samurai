@@ -1,17 +1,24 @@
 import React from 'react'
 import Profile from './Profile'
-import {connect} from 'react-redux'
-import {getProfile, getUserStatus, updateStatus} from '../../redux/profile-reducer'
-import {withRouter} from 'react-router-dom'
-import {withAuthRedirect} from '../../hoc/withAuthRedirect'
-import {compose} from 'redux'
+import { connect } from 'react-redux'
+import {
+  getProfile,
+  getUserStatus,
+  updateStatus,
+  savePhoto,
+  updateAboutMe,
+  updateLookFAJobDesc,
+} from '../../redux/profile-reducer'
+import { withRouter } from 'react-router-dom'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { compose } from 'redux'
 
 class ProfileContainer extends React.Component {
-  componentDidMount() {
+  refreshProfile() {
     let userID = this.props.match.params.userID
     if (!userID) {
       userID = this.props.userID
-      if(!userID) {
+      if (!userID) {
         this.props.history.push('/login')
       }
     }
@@ -19,12 +26,20 @@ class ProfileContainer extends React.Component {
     this.props.getUserStatus(userID)
   }
 
+  componentDidMount() {
+    this.refreshProfile()
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.match.params.userID !== prevProps.match.params.userID) {
+      this.refreshProfile()
+    }
+  }
+
   render() {
     return (
       <>
-        <Profile
-          {...this.props}
-        />
+        <Profile {...this.props} isOwner={!this.props.match.params.userID} />
       </>
     )
   }
@@ -33,12 +48,21 @@ class ProfileContainer extends React.Component {
 const mapSateToProps = (state) => ({
   profile: state.profilePage.profile,
   status: state.profilePage.status,
+  aboutMe: state.profilePage.profile.aboutMe,
+  lookFAJobDesc: state.profilePage.profile.lookingForAJobDescription,
   userID: state.auth.userID,
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
 })
 
 export default compose(
   withAuthRedirect,
   withRouter,
-  connect(mapSateToProps, {getProfile, getUserStatus, updateStatus})
+  connect(mapSateToProps, {
+    getProfile,
+    getUserStatus,
+    updateStatus,
+    savePhoto,
+    updateAboutMe,
+    updateLookFAJobDesc,
+  })
 )(ProfileContainer)

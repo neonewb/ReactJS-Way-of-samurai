@@ -1,9 +1,11 @@
 import React from 'react'
 import Style from './ProfileInfo.module.css'
 import PreLoader from '../../common/PreLoader/PreLoader'
+import userAvatar from '../../../assets/neo1.jpg'
 import ProfileStatus from './ProfileStatus'
+import ProfileDesc from './ProfileDesc'
 
-const ProfileInfo = ({ profile, status, updateStatus }) => {
+const ProfileInfo = ({ profile, status, updateStatus, isOwner, savePhoto, aboutMe, updateAboutMe, lookFAJobDesc, updateLookFAJobDesc }) => {
   if (!profile) {
     return (
       <div className={Style.mainImg}>
@@ -14,8 +16,14 @@ const ProfileInfo = ({ profile, status, updateStatus }) => {
 
   let profilePhoto = profile.photos.large
 
-  if (profile.photos.large === null) {
-    profilePhoto = 'neo1.jpg'
+  if (!profile.photos.large) {
+    profilePhoto = userAvatar
+  }
+
+  const onMainPhotoSelected = (e) => {
+    if (e.target.files.length) {
+      savePhoto(e.target.files[0])
+    }
   }
 
   return (
@@ -30,7 +38,11 @@ const ProfileInfo = ({ profile, status, updateStatus }) => {
           <div className={Style.profile__Name}>{profile.fullName}</div>
           <div>
             <ProfileStatus status={status} updateStatus={updateStatus} />
-            {profile.aboutMe}
+            <ProfileDesc title={aboutMe} updateCallBack={updateAboutMe} profile={profile} />
+            <ProfileDesc title={lookFAJobDesc} updateCallBack={updateLookFAJobDesc} profile={profile} />
+            {profile.lookingForAJob}
+            {profile.contacts.mainLink}
+            {isOwner && <input type='file' onChange={onMainPhotoSelected} />}
           </div>
         </div>
       </div>

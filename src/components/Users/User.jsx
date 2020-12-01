@@ -1,6 +1,7 @@
 import React from 'react'
 import Style from './Users.module.css'
 import { NavLink } from 'react-router-dom'
+import userAvatar from '../../assets/neo1.jpg'
 
 const User = ({
   user,
@@ -14,7 +15,7 @@ const User = ({
         <div className={Style.users__avatar}>
           <NavLink to={'/profile/' + user.id}>
             <img
-              src={user.photos.small === null ? 'neo1.jpg' : user.photos.small}
+              src={user.photos.small === null ? userAvatar : user.photos.small}
               alt={'avatar'}
             />
           </NavLink>

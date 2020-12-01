@@ -1,10 +1,20 @@
 const ON_SUBMIT_NEW_MESSAGE = 'ON-SUBMIT-NEW-MESSAGE'
 
+type chatNamesType = {
+  id: number
+  name: string
+}
+
+type chatMessageType = {
+  id: number
+  message: string
+}
+
 let initialState = {
   chatNames: [
-    {id: 0, name: 'Neo'},
-    {id: 1, name: 'Morpheus'},
-  ],
+    { id: 0, name: 'Neo' },
+    { id: 1, name: 'Morpheus' },
+  ] as Array<chatNamesType>,
   chatData: [
     [
       {
@@ -22,20 +32,23 @@ let initialState = {
         message:
           "I'm going to hang up this phone, and then I'm going to show these people what you don't want them to see. I'm going to show them a world without you. A world without rules and controls, without borders or boundaries. A world where anything is possible. Where we go from there is a choice I leave to you.",
       },
-    ],
+    ] as Array<chatMessageType>,
     [
-      {id: 0, message: 'Wake up, Neo...'},
-      {id: 1, message: 'The Matrix has you...'},
-      {id: 2, message: 'Follow the white rabbit...'},
-      {id: 3, message: 'Knock, knock, Neo...'},
-    ],
+      { id: 0, message: 'Wake up, Neo...' },
+      { id: 1, message: 'The Matrix has you...' },
+      { id: 2, message: 'Follow the white rabbit...' },
+      { id: 3, message: 'Knock, knock, Neo...' },
+    ] as Array<chatMessageType>,
   ],
 }
 
-const messageReducer = (state = initialState, action) => {
+type initialStateType = typeof initialState
 
+const messageReducer = (
+  state = initialState,
+  action: any
+): initialStateType => {
   switch (action.type) {
-
     case ON_SUBMIT_NEW_MESSAGE:
       if (action.text === undefined) return state
       let chatID = action.chatID
@@ -55,10 +68,16 @@ const messageReducer = (state = initialState, action) => {
   }
 }
 
-export const sendMessage = (chatID, text) => ({
+type sendMessageType = {
+  type: typeof ON_SUBMIT_NEW_MESSAGE
+  text: string
+  chatID: number
+}
+
+export const sendMessage = (chatID: number, text: string): sendMessageType => ({
   type: ON_SUBMIT_NEW_MESSAGE,
   chatID,
-  text
+  text,
 })
 
 export default messageReducer

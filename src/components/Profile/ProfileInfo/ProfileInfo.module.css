@@ -36,4 +36,10 @@
 
 .profile__status {
   font-weight: bold;
+  cursor: pointer;
+}
+
+.profile__aboutMe {
+  font-style: italic;
+  cursor: pointer;
 }

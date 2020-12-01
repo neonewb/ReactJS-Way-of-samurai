@@ -8,60 +8,92 @@ const axiosInstance = axios.create({
 
 export const usersAPI = {
   async getUsers(pageNumber = 1, pageSize = 4) {
-    const response = await axiosInstance
-      .get(`users?page=${pageNumber}&count=${pageSize}`)
+    const response = await axiosInstance.get(
+      `users?page=${pageNumber}&count=${pageSize}`
+    )
     return response.data
   },
 
   async followUser(userID) {
-    const response = await axiosInstance
-      .post(`follow/${userID}`)
+    const response = await axiosInstance.post(`follow/${userID}`)
     return response.data.resultCode
   },
 
   async unFollowUser(userID) {
-    const response = await axiosInstance
-      .delete(`follow/${userID}`)
+    const response = await axiosInstance.delete(`follow/${userID}`)
     return response.data.resultCode
   },
 }
 
 export const authAPI = {
   async authMe() {
-    const response = await axiosInstance
-      .get('auth/me')
+    const response = await axiosInstance.get('auth/me')
     return response.data
   },
-  async login(email, password, rememberMe = false) {
-    const response = await axiosInstance
-      .post('auth/login', { email, password, rememberMe })
+  async login(email, password, rememberMe = false, captcha) {
+    const response = await axiosInstance.post('auth/login', {
+      email,
+      password,
+      rememberMe,
+      captcha,
+    })
     return response.data
   },
   async logOut() {
-    const response = await axiosInstance
-      .delete('auth/login')
+    const response = await axiosInstance.delete('auth/login')
+    return response.data
+  },
+}
+
+export const securityAPI = {
+  async getCaptcha() {
+    const response = await axiosInstance.get('security/get-captcha-url')
     return response.data
   },
 }
 
 export const profileAPI = {
   async getProfile(userID) {
-    const response = await axiosInstance
-      .get(`profile/${userID}`)
+    const response = await axiosInstance.get(`profile/${userID}`)
     return response.data
   },
 
   async getUserStatus(userID) {
-    const response = await axiosInstance
-      .get(`profile/status/${userID}`)
+    const response = await axiosInstance.get(`profile/status/${userID}`)
     return response.data
   },
 
   async updateStatus(status) {
-    const response = await axiosInstance
-      .put('profile/status', {
-        status,
-      })
+    const response = await axiosInstance.put('profile/status', {
+      status,
+    })
+    return response.data
+  },
+
+  async savePhoto(photoFile) {
+    const formData = new FormData()
+    formData.append('image', photoFile)
+    const response = await axiosInstance.put('profile/photo', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return response.data
+  },
+
+  async updateAboutMe(aboutMeText, profile) {
+    const response = await axiosInstance.put('profile', {
+      ...profile,
+      aboutMe: aboutMeText,
+    })
+    return response.data
+  },
+
+  async updateLookFAJobDesc(lookFAJobDesc, profile) {
+    const response = await axiosInstance.put('profile', {
+      ...profile,
+      lookingForAJobDescription: lookFAJobDesc,
+    })
     return response.data
   },
 }

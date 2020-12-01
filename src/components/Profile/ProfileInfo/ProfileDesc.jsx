@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import Style from './ProfileInfo.module.css'
 
-const ProfileStatus = ({status, updateStatus}) => {
+const ProfileDesc = ({title, updateCallBack, profile}) => {
   const [editMode, setEditMode] = useState(false)
-  const [statusLS, setStatus] = useState(status)
+  const [titleLS, setTitle] = useState(title)
 
   useEffect( () => {
-    setStatus(status)
-  }, [status])
+    setTitle(title)
+  }, [title])
 
   const handleFocus = (e) => e.target.select()
 
   const onBlur = () => {
     setEditMode(false)
-    updateStatus(statusLS)
+    updateCallBack(titleLS, profile)
   }
 
   const onChange = (e) => {
-    setStatus(e.currentTarget.value)
+    setTitle(e.currentTarget.value)
   }
 
   return (
@@ -25,19 +25,19 @@ const ProfileStatus = ({status, updateStatus}) => {
       {!editMode && (
         <div>
           <span
-            className={Style.profile__status}
+            className={Style.profile__aboutMe}
             onClick={() => setEditMode(true)}>
-            {status || 'no status'}
+            {title || 'no title'}
           </span>
         </div>
       )}
       {editMode && (
         <div>
-          <input
+          <textarea
             autoFocus={true}
             onFocus={handleFocus}
             onBlur={onBlur}
-            value={statusLS}
+            value={titleLS}
             onChange={onChange}
           />
         </div>
@@ -46,4 +46,4 @@ const ProfileStatus = ({status, updateStatus}) => {
   )
 }
 
-export default ProfileStatus
+export default ProfileDesc
