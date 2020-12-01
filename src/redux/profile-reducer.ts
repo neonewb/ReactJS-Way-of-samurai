@@ -1,6 +1,8 @@
 import { photosType, profileType } from './../types/types'
 import { profileAPI } from '../api/api'
 import { postType } from '../types/types'
+import { ThunkAction } from 'redux-thunk'
+import { AppStateType } from './redux-store'
 
 const ADD_POST = 'ADD_POST'
 const DELETE_POST = 'DELETE_POST'
@@ -98,6 +100,8 @@ const profileReducer = (
   }
 }
 
+type ActionsTypes = addPostType | deletePostType| setUserProfileType | setUserStatusType | savePhotoSuccessType | updateAboutMeSuccessType | updatelookFAJobDescSuccessType
+
 // Types
 type addPostType = {
   type: typeof ADD_POST
@@ -175,17 +179,20 @@ const updatelookFAJobDescSuccess = (
 })
 
 // Thunk
-export const getProfile = (userID: number) => async (dispatch: any) => {
+
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+
+export const getProfile = (userID: number): ThunkType => async (dispatch) => {
   const response = await profileAPI.getProfile(userID)
   dispatch(setUserProfile(response))
 }
 
-export const getUserStatus = (userID: number) => async (dispatch: any) => {
+export const getUserStatus = (userID: number): ThunkType => async (dispatch) => {
   const response = await profileAPI.getUserStatus(userID)
   dispatch(setUserStatus(response))
 }
 
-export const updateStatus = (status: string) => async (dispatch: any) => {
+export const updateStatus = (status: string): ThunkType => async (dispatch) => {
   try {
     const response = await profileAPI.updateStatus(status)
     if (response.resultCode === 0) {
@@ -196,7 +203,7 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
   }
 }
 
-export const savePhoto = (file: any) => async (dispatch: any) => {
+export const savePhoto = (file: any): ThunkType => async (dispatch) => {
   const response = await profileAPI.savePhoto(file)
   if (response.resultCode === 0) {
     dispatch(savePhotoSuccess(response.data.photos))
@@ -206,7 +213,7 @@ export const savePhoto = (file: any) => async (dispatch: any) => {
 export const updateAboutMe = (
   aboutMeText: string,
   profile: profileType
-) => async (dispatch: any) => {
+): ThunkType => async (dispatch) => {
   const response = await profileAPI.updateAboutMe(aboutMeText, profile)
   if (response.resultCode === 0) {
     dispatch(updateAboutMeSuccess(aboutMeText))
@@ -216,7 +223,7 @@ export const updateAboutMe = (
 export const updateLookFAJobDesc = (
   lookFAJobDesc: string,
   profile: profileType
-) => async (dispatch: any) => {
+): ThunkType => async (dispatch) => {
   const response = await profileAPI.updateLookFAJobDesc(lookFAJobDesc, profile)
   if (response.resultCode === 0) {
     dispatch(updatelookFAJobDescSuccess(lookFAJobDesc))

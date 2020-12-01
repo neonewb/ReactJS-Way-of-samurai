@@ -7,7 +7,7 @@ import appReducer from './app-reducer'
 import thunkMiddleware from 'redux-thunk'
 import { reducer as formReducer } from 'redux-form'
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
   profilePage: profileReducer,
   messagesPage: messageReducer,
   usersPage: usersReducer,
@@ -16,10 +16,14 @@ const reducers = combineReducers({
   form: formReducer,
 })
 
+type RootReducerType = typeof rootReducer // (globalState: AppStateType) => AppStateType
+export type AppStateType = ReturnType<RootReducerType>
+
+// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const store = createStore(
-  reducers,
+  rootReducer,
   composeEnhancers(applyMiddleware(thunkMiddleware))
 )
 

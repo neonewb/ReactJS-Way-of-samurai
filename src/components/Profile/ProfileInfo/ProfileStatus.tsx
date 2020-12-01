@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, FC, FocusEvent, useEffect, useState } from 'react'
 import Style from './ProfileInfo.module.css'
 
-const ProfileStatus = ({status, updateStatus}) => {
+type PropsType = {
+  status: string
+  updateStatus: (status: string) => void
+}
+
+const ProfileStatus: FC<PropsType> = ({status, updateStatus}) => {
   const [editMode, setEditMode] = useState(false)
-  const [statusLS, setStatus] = useState(status)
+  const [statusLS, setStatus] = useState<string>(status)
 
   useEffect( () => {
     setStatus(status)
   }, [status])
 
-  const handleFocus = (e) => e.target.select()
+  const handleFocus = (e: FocusEvent<HTMLInputElement>) => e.target.select()
 
   const onBlur = () => {
     setEditMode(false)
     updateStatus(statusLS)
   }
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStatus(e.currentTarget.value)
   }
 

@@ -3,12 +3,7 @@ import Style from './Users.module.css'
 import { NavLink } from 'react-router-dom'
 import userAvatar from '../../assets/neo1.jpg'
 
-const User = ({
-  user,
-  isFollowingInProgress,
-  followUser,
-  unFollowUser,
-}) => {
+const User = ({ user, followingInProgress, followUser, unFollowUser }) => {
   return (
     <div className={Style.user}>
       <div>
@@ -23,7 +18,7 @@ const User = ({
         <div>
           {user.followed ? (
             <button
-              disabled={isFollowingInProgress.some((id) => id === user.id)}
+              disabled={followingInProgress.some((id) => id === user.id)}
               onClick={() => {
                 unFollowUser(user.id)
               }}>
@@ -31,7 +26,7 @@ const User = ({
             </button>
           ) : (
             <button
-              disabled={isFollowingInProgress.some((id) => id === user.id)}
+              disabled={followingInProgress.some((id) => id === user.id)}
               onClick={() => {
                 followUser(user.id)
               }}>
