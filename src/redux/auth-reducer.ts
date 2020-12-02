@@ -7,14 +7,6 @@ import { authAPI, ResultCodesE, securityAPI } from '../api/api'
 const SET_USER_DATA = 'auth/SET_USER_DATA'
 const SET_CAPTCHA_URL = 'auth/SET_CAPTCHA_URL'
 
-type initialStateType2 = {
-  userID: number | null
-  login: string | null
-  email: string | null
-  isAuth: boolean
-  captchaURL?: string | null
-}
-
 let initialState = {
   userID: null as number | null,
   login: null as string | null,
@@ -23,9 +15,9 @@ let initialState = {
   captchaURL: null as string | null,
 }
 
-type initialStateType = typeof initialState
+type initialStateT = typeof initialState
 
-const authReducer = (state = initialState, action: any): initialStateType2 => {
+const authReducer = (state = initialState, action: any): initialStateT => {
   switch (action.type) {
     case SET_USER_DATA:
     case SET_CAPTCHA_URL:
